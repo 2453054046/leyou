@@ -1,0 +1,44 @@
+#自动刷新配置
+Springcloud:
+  refresh:
+    refreshable: none
+server:
+  port: 8081
+spring:
+  application:
+    name: item-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/leyou?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    username: root
+    password: 741852963
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 10
+  #消息队列
+  rabbitmq:
+    host: 192.168.25.140    #消息队列的地址
+    username: leyou         #消息队列用户名和密码
+    password: leyou
+    virtual-host: /
+    template:
+      retry:
+        enabled: true                 #开启重试
+        initial-interval: 10000ms     #重试间隔时间
+        max-interval: 300000ms        #重试结束时间
+        multiplier: 2                 #当第一次重试失败时，将时间乘以2的结果为下次重试间隔时间
+      exchange: ly.item.exchange      #交换机的名称
+    publisher-confirms: true          #开启重试
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

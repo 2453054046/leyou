@@ -1,0 +1,44 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/leyou?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    username: root
+    password: 741852963
+    driver-class-name: com.mysql.jdbc.Driver
+  jackson:
+    default-property-inclusion: non_null
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+mybatis:
+  type-aliases-package: com.leyou.order.pojo
+
+#pojo属性
+ly:
+  jwt:
+    pubKeyPath: F:/a.code/ideaHome03/SpringBoot_Shopping/SBS_01/auth_rsa/rsa.pub # 公钥地址
+    cookieName: LY_TOKEN #cookie的的名称
+  #订单号生成初始
+  worker:
+    workerId: 1   #工作机器ID
+    dataCenterId: 1   #序列号
+  #微信支付
+  pay:
+    appID: wx8397f8696b538317 # 公众账号 ID
+    mchID: 1473426802         #商户号
+    key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb  #生成签名的密钥
+    httpConnectTimeoutMs: 1000      #连接超时时间
+    httpReadTimeoutMs: 8000       #读取超时时间
+    tradeType: NATIVE         #交易类型
+    spbillCreateIp: 127.0.0.1 #本地 ip
+    notifyUrl: http://ueizdi.natappfree.cc/wxpay/notify   #回调地址

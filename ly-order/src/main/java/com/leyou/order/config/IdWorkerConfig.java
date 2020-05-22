@@ -1,0 +1,22 @@
+package com.leyou.order.config;
+
+
+import com.leyou.common.utlis.utils.IdWorker;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableConfigurationProperties(IdWorkerProperties.class)
+public class IdWorkerConfig {
+
+    /**
+     * 将生成订单号工具放入容器
+     * @param prop
+     * @return
+     */
+    @Bean
+    public IdWorker idWorker(IdWorkerProperties prop) {
+        return new IdWorker(prop.getWorkerId(), prop.getDataCenterId());
+    }
+}
